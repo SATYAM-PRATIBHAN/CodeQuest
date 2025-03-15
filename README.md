@@ -145,5 +145,6 @@ We welcome contributions to improve CodeQuest! Feel free to submit issues, pull 
 ---
 
 ## License 📜
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](./License).
+
 
