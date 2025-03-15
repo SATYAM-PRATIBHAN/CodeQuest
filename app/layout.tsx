@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "CodeQuest - Your Ultimate Coding Hub",
     description: "Practice coding interview questions from multiple platforms in one place.",
-    url: "https://yourwebsite.com",
+    url: "https://codequest-pi.vercel.app/",
     type: "website",
     images: [
       {
