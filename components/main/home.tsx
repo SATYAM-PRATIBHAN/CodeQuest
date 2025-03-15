@@ -94,16 +94,16 @@ export default function Home() {
       {/* Hero Section */}
       <ContainerScroll
         titleComponent={
-          <section className="flex relative z-10 flex-col items-center justify-center text-center py-24 px-8">
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight max-w-4xl tracking-tight">
+          <section className="flex relative z-10 flex-col items-center justify-center text-center py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-8 min-h-[70vh]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight max-w-4xl tracking-tight">
               Master Coding Interviews with <span className="text-[#3B82F6]">CodeQuest</span>
             </h1>
-            <p className="text-lg text-[#94A3B8] mt-5 max-w-2xl">
+            <p className="text-base sm:text-lg md:text-lg text-[#94A3B8] mt-4 sm:mt-5 max-w-xl sm:max-w-2xl">
               The ultimate hub for coding interview preparation. Practice problems from LeetCode, Codeforces, and more—all in one place.
             </p>
-            <div className="mt-8 relative z-10">
+            <div className="mt-6 sm:mt-8 relative z-10">
               <Link href="/problems">
-                <Button className="text-lg font-semibold px-7 py-3.5 bg-[#0A0E14] text-[#F0F4F8] border border-[#2A3239] hover:bg-[#3B82F6] hover:border-[#3B82F6] rounded-xl transition-all duration-300">
+                <Button className="text-base sm:text-lg font-semibold px-5 sm:px-7 py-2.5 sm:py-3.5 bg-[#0A0E14] text-[#F0F4F8] border border-[#2A3239] hover:bg-[#3B82F6] hover:border-[#3B82F6] rounded-xl transition-all duration-300">
                   Explore Problems
                 </Button>
               </Link>
