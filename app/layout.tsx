@@ -20,6 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "CodeQuest - Best Coding Interview Hub",
   description: "CodeQuest aggregates the best coding problems from platforms like LeetCode, CodeForces, and HackerRank.",
+  icons: {
+    icon: "/logo.ico", // For browsers
+    shortcut: "/logo.ico", // Shortcut icon for quick access
+  },
   keywords: "coding, interview prep, coding problems, leetcode, hackerrank, codeforces",
   robots: "index, follow",
   openGraph: {
