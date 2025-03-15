@@ -37,7 +37,7 @@ CodeQuest is a comprehensive platform that aggregates the best coding interview 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/codequest.git
+git clone https://github.com/SATYAM-PRATIBHAN/CodeQuest.git
 cd codequest
 ```
 
