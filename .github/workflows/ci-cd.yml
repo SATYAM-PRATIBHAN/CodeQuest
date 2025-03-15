@@ -32,6 +32,4 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      - name: Docker Build
-        run: docker build -t codequest:latest .
 
