@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/meta-image.png", // Correct path for Next.js public assets
+        url: "/metaimage.png", // Correct path for Next.js public assets
         width: 1200,
         height: 630,
         alt: "CodeQuest - Master Coding Interviews"
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     site: "@s_pratibhan",
     title: "CodeQuest - Master Coding Interviews",
     description: "Practice coding interview questions from multiple platforms in one place.",
-    images: ["/meta-image.png"] // Same path for Twitter meta image
+    images: ["/metaimage.png"] // Same path for Twitter meta image
   }
 };
 
