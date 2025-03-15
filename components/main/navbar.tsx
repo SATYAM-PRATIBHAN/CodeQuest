@@ -36,7 +36,7 @@ export default function Navbar() {
         </ul>
 
         {/* Desktop Authentication */}
-        <div className="hidden md:flex relative z-10 items-center gap-4 lg:gap-6">
+        <div className="hidden md:flex  items-center gap-4 lg:gap-6">
           {session ? (
             <>
               <span className="text-[#F0F4F8] font-medium truncate max-w-[120px] lg:max-w-[160px]">
@@ -44,7 +44,7 @@ export default function Navbar() {
               </span>
               <Button
                 variant="outline"
-                className="border-[#2A3239] text-[#F0F4F8] hover:bg-red-600 hover:border-red-600 relative z-50 transition-all duration-300 text-sm lg:text-base px-4 lg:px-5 py-2 rounded-xl"
+                className="border-[#2A3239] text-[#F0F4F8] hover:bg-red-600 hover:border-red-600 relative z-10 transition-all duration-300 text-sm lg:text-base px-4 lg:px-5 py-2 rounded-xl"
                 onClick={() => {
                   signOut();
                   handleLogout();
@@ -56,7 +56,7 @@ export default function Navbar() {
           ) : (
             <Button
               variant="outline"
-              className="border-[#2A3239]text-[#F0F4F8] hover:bg-[#3B82F6] hover:border-[#3B82F6] relative z-50 transition-all duration-300 text-sm lg:text-base px-4 lg:px-5 py-2 rounded-xl"
+              className="border-[#2A3239]text-[#F0F4F8] hover:bg-[#3B82F6] hover:border-[#3B82F6] relative z-10 transition-all duration-300 text-sm lg:text-base px-4 lg:px-5 py-2 rounded-xl"
               onClick={() => router.push("/signin")}
             >
               Sign In
