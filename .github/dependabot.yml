@@ -1,0 +1,20 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "automated"
+    assignees:
+      - "SATYAM-PRATIBHAN"
+    reviewers:
+      - "SATYAM-PRATIBHAN"
+    ignore:
+      - dependency-name: "react"
+        versions: [">18.0.0"]
+ 
