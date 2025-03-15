@@ -38,7 +38,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@s_pratibhan",
     title: "CodeQuest - Master Coding Interviews",
     description: "Practice coding interview questions from multiple platforms in one place.",
     images: ["/metaimage.png"] // Same path for Twitter meta image
