@@ -6,7 +6,6 @@ CodeQuest is a comprehensive platform that aggregates the best coding interview 
 - **Aggregated Coding Problems** from various platforms.
 - **Integrated Code Editor** for solving problems directly on the platform.
 - **Real-time Discussions** powered by WebSockets for interactive learning.
-- **Optional Whiteboard** for sketching data structures and algorithms.
 - **Progress Tracking** to help users monitor their preparation journey.
 - **Advanced Filtering & Search** for seamless navigation.
 - **Authentication** using NextAuth with Google and Credential Providers.
