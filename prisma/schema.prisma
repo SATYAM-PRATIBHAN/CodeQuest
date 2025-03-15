@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String    @id @default(uuid()) 
+  username       String    @unique
+  email          String    @unique
+  password       String?   
+  image          String?   
+  createdAt      DateTime  @default(now())
+  problems       UserProblemStatus[]
+}
+
+model Problem {
+  id          String   @id @default(cuid()) 
+  title       String   @unique 
+  description String   @default("")
+  difficulty  String   
+  platform    String   
+  tags        String[] 
+  url         String  
+  submissions Int      @default(0) 
+  accuracy    Float    @default(0.0) 
+  upvotes     Int      @default(0) 
+  createdAt   DateTime @default(now()) 
+  userStatus  UserProblemStatus[]
+  testCases   Json     @default("[]") 
+}
+
+
+model UserProblemStatus {
+  id        String  @id @default(uuid())
+  userId    String  
+  problemId String  @unique
+  status    String  @default("UNSOLVED")
+  solvedAt  DateTime? 
+  user      User    @relation(fields: [userId], references: [id])
+  problem   Problem @relation(fields: [problemId], references: [id])
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  username  String
+  text      String
+  createdAt DateTime @default(now())
+}
