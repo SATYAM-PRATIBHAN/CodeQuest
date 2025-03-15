@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: Request, { params }: { params: { name: string } }) {
-  const { name } = params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ name: string }> }
+) {
+  const { name } = await params;
 
   if (!name) {
     return NextResponse.json({ error: "Missing username parameter" }, { status: 400 });

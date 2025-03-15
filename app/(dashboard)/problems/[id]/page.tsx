@@ -94,8 +94,6 @@ hello_world()`,
     const languageMap: Record<string, string> = {
       JavaScript: "javascript",
       Python: "python",
-      "C++": "cpp",
-      Java: "java",
     };
     return languageMap[lang] || "plaintext"; 
   }
