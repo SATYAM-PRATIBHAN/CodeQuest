@@ -32,6 +32,8 @@ model Problem {
   createdAt   DateTime @default(now()) 
   userStatus  UserProblemStatus[]
   testCases   Json     @default("[]") 
+  starterCodeJS String   @default("")
+  starterCodePY String   @default("")
 }
 
 

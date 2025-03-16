@@ -26,6 +26,8 @@ export async function GET(
         createdAt: true,
         userStatus: true,
         testCases: true,
+        starterCodeJS: true,
+        starterCodePY: true
       },
     });
 

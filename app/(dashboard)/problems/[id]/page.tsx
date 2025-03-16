@@ -47,23 +47,6 @@ export default function ProblemPage() {
     }
   }
 
-  
-  useEffect(() => {
-    const defaultCode: Record<string, string> = {
-      JavaScript: `
-var helloWorld = function() {
-  return "Hello, World!";
-};
-`,    
-      Python: `
-def hello_world():
-    print("Hello, World!")
-
-hello_world()`,
-    };
-  
-    setValue(defaultCode[language.name] || "// Start coding here...");
-  }, [language]); 
 
   useEffect(() => {
     if (!session?.user?.id || !id) return;
@@ -113,6 +96,12 @@ hello_world()`,
         const res = await fetch(`/api/problems/${id}`);
         if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);
         const data = await res.json();
+        if(getMonacoLanguage(language.name) === "JavaScript") {
+          setValue(data.starterCodeJS);
+        }
+        if(getMonacoLanguage(language.name) === "Python") {
+          setValue(data.starterCodePY);
+        }
         setProblem({ ...data, testCases: data.testCases || [] });
       } catch (error) {
         console.error("Fetch error:", error);
@@ -121,7 +110,7 @@ hello_world()`,
       }
     };
     fetchProblem();
-  }, [id, session]); // Added `session` dependency
+  }, [id, session, language.name]); // Added `session` dependency
   
   async function runCode() {
     console.log("Run Code Clicked!");
@@ -144,27 +133,29 @@ hello_world()`,
         switch (language.pistonName) {
           case "javascript":
             const jsFunctionNameMatch = value.match(
-              /(const|let|var)?\s*(\w+)\s*=\s*(function|\(?\w*\)?\s*=>)/
+              /function\s+(\w+)\s*\(.*\)|(?:const|let|var)?\s*(\w+)\s*=\s*(function|\(?\w*\)?\s*=>)/
             );
             const jsFunctionName = jsFunctionNameMatch
-              ? jsFunctionNameMatch[2]
+              ? jsFunctionNameMatch[1] || jsFunctionNameMatch[2]
               : null;
-  
+
             if (!jsFunctionName) {
               setOutput("Error: No function found in JavaScript code.");
               setExecuting(false);
               return;
             }
+
             executionCode += `\nconsole.log(${jsFunctionName}(${JSON.stringify(
               testCase.input
             )}));`;
             break;
+
   
           case "python":
-            const pyFunctionNameMatch = value.match(/def (\w+)\(/);
-            const pyFunctionName = pyFunctionNameMatch
-              ? pyFunctionNameMatch[1]
-              : null;
+            const pyFunctionNameMatch = value.match(/def (\w+)\(([^)]*)\)/);
+            const pyFunctionName = pyFunctionNameMatch ? pyFunctionNameMatch[1] : null;
+            const pyParams = pyFunctionNameMatch ? pyFunctionNameMatch[2].trim() : null;
+
   
             if (!pyFunctionName) {
               setOutput("Error: No function found in Python code.");
@@ -172,9 +163,10 @@ hello_world()`,
               return;
             }
   
-            executionCode += `\nprint(${pyFunctionName}(${JSON.stringify(
-              testCase.input
-            )}))`;
+            executionCode += pyParams
+              ? `\nprint(${pyFunctionName}(${JSON.stringify(testCase.input)}))`
+              : `\nprint(${pyFunctionName}())`;
+
             break;
         }
   
@@ -369,7 +361,6 @@ hello_world()`,
             height="500px"
             theme={theme}
             language={getMonacoLanguage(language.name)}
-            onChange={(val) => setValue(val || "")}
             value={value}
             options={{
               fontSize: 15,
