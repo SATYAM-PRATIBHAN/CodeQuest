@@ -17,6 +17,8 @@ interface Problem {
   description: string;
   url: string;
   testCases: { input: string; expectedOutput: string }[];
+  starterCodeJS: string;
+  starterCodePY: string;
 }
 
 const languageOptions = [
@@ -87,6 +89,19 @@ export default function ProblemPage() {
       router.push("/signin");
     }
   }, [session, status, router]);
+
+  useEffect(() => {
+    if (!problem) return;
+
+    if (getMonacoLanguage(language.name) === "javascript") {
+      setValue(problem.starterCodeJS ? JSON.parse(`"${problem.starterCodeJS}"`) : "");
+    }
+    if (getMonacoLanguage(language.name) === "python") {
+      setValue(problem.starterCodePY ? JSON.parse(`"${problem.starterCodePY}"`) : "");
+    }
+}, [language.name, problem]);
+
+  
   
   useEffect(() => {
     if (!session?.user?.id || !id) return;
@@ -95,13 +110,6 @@ export default function ProblemPage() {
         const res = await fetch(`/api/problems/${id}`);
         if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);
         const data = await res.json();
-
-        if (getMonacoLanguage(language.name) === "javascript") {
-          setValue(data.starterCodeJS);
-        }
-        if (getMonacoLanguage(language.name) === "python") {
-          setValue(data.starterCodePY);
-        }
         
         setProblem({ ...data, testCases: data.testCases || [] });
       } catch (error) {
