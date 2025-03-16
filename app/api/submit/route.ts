@@ -5,6 +5,11 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { userId, problemId, status } = body;
 
+    if (typeof userId !== "string" || typeof problemId !== "string") {
+        return NextResponse.json({ error: "Invalid data type for userId or problemId." }, { status: 400 });
+    }
+    
+
     if (!userId || !problemId || !status) {
         return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
     }
@@ -20,9 +25,15 @@ export async function POST(req: NextRequest) {
         if (existingStatus) {
             // Update existing status
             const updatedStatus = await db.userProblemStatus.update({
-                where: { id: existingStatus.id },
+                where: {
+                    userId_problemId: {
+                        userId,
+                        problemId
+                    }
+                },
                 data: { status, solvedAt: status === "SOLVED" ? new Date() : null },
             });
+            
 
             return NextResponse.json({ message: "Status updated successfully.", updatedStatus });
         } else {
