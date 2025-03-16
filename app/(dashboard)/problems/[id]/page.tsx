@@ -241,6 +241,7 @@ export default function ProblemPage() {
     const normalizedUserId = session?.user.id.startsWith("google|")
   ? session.user.id.split("|")[1]  // Extract actual ID
   : session?.user.id;
+  console.log("Normalized User ID:", normalizedUserId);
   
     try {
       const res = await fetch(`/api/submit`, {
