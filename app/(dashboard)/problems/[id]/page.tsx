@@ -132,7 +132,6 @@ export default function ProblemPage() {
   }, [id, session,language.name]); // Added `session` dependency
   
   async function runCode() {
-    console.log("Run Code Clicked!");
     setExecuting(true);
     setOutput("Running...");
   
@@ -239,14 +238,16 @@ export default function ProblemPage() {
   
   // Submit Logic
   async function handleSubmit() {
-    if (!session?.user?.id || !id) return;
+    const normalizedUserId = session?.user.id.startsWith("google|")
+  ? session.user.id.split("|")[1]  // Extract actual ID
+  : session?.user.id;
   
     try {
       const res = await fetch(`/api/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          userId: session.user.id,
+          userId: normalizedUserId,
           problemId: id,
           status: "Solved",
         }),
