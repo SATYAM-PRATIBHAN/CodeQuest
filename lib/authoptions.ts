@@ -56,29 +56,45 @@ export const authOptions: NextAuthOptions = {
         return token;
       },
         async signIn(params) {
-            if (!params.user.email) {
-                return false
-            }
-            try {
-              const user = await db.user.findUnique({
-                where : {
-                  email : params.user.email
-                }
-              })
-              if(user) return true;
-              
-                await db.user.create({
-                    data: {
-                        email: params.user.email,
-                        username: params.user.name ?? "",
-                    }
-                })
-              
-            } catch(error) {
-                console.log("An error occurred ", error);
-            }
-            return true;
-        }
+          const { user, account } = params;
+      
+          if (!user?.email) {
+              return false;
+          }
+      
+          try {
+              const existingUser = await db.user.findUnique({
+                  where: { email: user.email }
+              });
+      
+              if (!existingUser) {
+                  if (account?.provider === "google") {
+                      // ✅ Create Google User with Google ID
+                      await db.user.create({
+                          data: {
+                              id: account.providerAccountId, // ✅ Correct Google ID from params
+                              email: user.email,
+                              username: user.name ?? "",
+                              image: user.image ?? "", // Optional Google profile image
+                          }
+                      });
+                  } else if (account?.provider === "credentials") {
+                      // ✅ Create Credentials User
+                      await db.user.create({
+                          data: {
+                              email: user.email,
+                              username: user.name ?? "",
+                          }
+                      });
+                  }
+              }
+      
+              return true;
+          } catch (error) {
+              console.error("An error occurred while signing in: ", error);
+              return false;
+          }
+      }   
     },
     session: {
       strategy: "jwt",
