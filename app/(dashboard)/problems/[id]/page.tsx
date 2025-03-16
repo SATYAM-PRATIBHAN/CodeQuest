@@ -96,12 +96,13 @@ export default function ProblemPage() {
         if (!res.ok) throw new Error(`Error: ${res.status} - ${res.statusText}`);
         const data = await res.json();
 
-        if(getMonacoLanguage(language.name) === "JavaScript"){
-          setValue(data.starterCodeJS)
+        if (getMonacoLanguage(language.name) === "javascript") {
+          setValue(data.starterCodeJS);
         }
-        if(getMonacoLanguage(language.name) === "Python"){
-          setValue(data.starterCodePY)
+        if (getMonacoLanguage(language.name) === "python") {
+          setValue(data.starterCodePY);
         }
+        
         setProblem({ ...data, testCases: data.testCases || [] });
       } catch (error) {
         console.error("Fetch error:", error);
