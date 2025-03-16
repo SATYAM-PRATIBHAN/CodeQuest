@@ -94,10 +94,10 @@ export default function ProblemPage() {
     if (!problem) return;
 
     if (getMonacoLanguage(language.name) === "javascript") {
-      setValue(problem.starterCodeJS ? JSON.parse(`"${problem.starterCodeJS}"`) : "");
+      setValue(Function(`return \`${problem.starterCodeJS}\``)());
     }
     if (getMonacoLanguage(language.name) === "python") {
-      setValue(problem.starterCodePY ? JSON.parse(`"${problem.starterCodePY}"`) : "");
+      setValue(Function(`return \`${problem.starterCodePY}\``)());
     }
 }, [language.name, problem]);
 
