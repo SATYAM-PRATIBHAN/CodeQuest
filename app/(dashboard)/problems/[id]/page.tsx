@@ -142,11 +142,12 @@ export default function ProblemPage() {
         switch (language.pistonName) {
           case "javascript":
             const jsFunctionNameMatch = value.match(
-              /(const|let|var)?\s*(\w+)\s*=\s*(function|\(?\w*\)?\s*=>)/
+              /(?:function\s+)?([\w$]+)\s*=\s*(?:function|\(?\w*\)?\s*=>)|function\s+([\w$]+)\s*\(/
             );
             const jsFunctionName = jsFunctionNameMatch
-              ? jsFunctionNameMatch[2]
+              ? jsFunctionNameMatch[1] || jsFunctionNameMatch[2]
               : null;
+            
   
             if (!jsFunctionName) {
               setOutput("Error: No function found in JavaScript code.");
