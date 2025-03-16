@@ -15,41 +15,32 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        // Check if the status entry already exists
-        const existingStatus = await db.userProblemStatus.findUnique({
-            where: { userId_problemId: { userId, problemId } },
+        // Upsert logic: Create if doesn't exist, update if exists
+        const updatedStatus = await db.userProblemStatus.upsert({
+            where: { 
+                userId_problemId: { userId, problemId }
+            },
+            create: {
+                userId,
+                problemId,
+                status,
+                solvedAt: status === "SOLVED" ? new Date() : null,
+            },
+            update: {
+                status,
+                solvedAt: status === "SOLVED" ? new Date() : null,
+            },
         });
 
-        const isNewSubmission = !existingStatus || existingStatus.status !== "SOLVED";
+        // Increment submission count only when a new status is created
+        if (updatedStatus) {
+            await db.problem.update({
+                where: { id: problemId },
+                data: { submissions: { increment: 1 } },
+            });
+        }
 
-        await db.$transaction([
-            db.userProblemStatus.upsert({
-                where: { 
-                    userId_problemId: { userId, problemId }
-                },
-                create: {
-                    userId,
-                    problemId,
-                    status,
-                    solvedAt: status === "SOLVED" ? new Date() : null,
-                },
-                update: {
-                    status,
-                    solvedAt: status === "SOLVED" ? new Date() : null,
-                },
-            }),
-            // Increment submission count only when a new status is created or transitioning from UNSOLVED ➔ SOLVED
-            ...(isNewSubmission && status === "SOLVED"
-                ? [
-                    db.problem.update({
-                        where: { id: problemId },
-                        data: { submissions: { increment: 1 } },
-                    }),
-                ]
-                : []),
-        ]);
-
-        return NextResponse.json({ message: "Status updated successfully." }, { status: 200 });
+        return NextResponse.json({ message: "Status updated successfully.", updatedStatus }, { status: 200 });
 
     } catch (error) {
         console.error("Database Error:", error);
