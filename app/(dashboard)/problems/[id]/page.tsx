@@ -251,6 +251,9 @@ export default function ProblemPage() {
           status: "Solved",
         }),
       });
+      const data = await res.json();
+      console.log("Server Response:", data);
+
   
       if (!res.ok) throw new Error("Failed to submit solution.");
       alert("Solution submitted successfully!");
