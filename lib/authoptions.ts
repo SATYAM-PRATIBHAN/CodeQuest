@@ -73,6 +73,7 @@ export const authOptions: NextAuthOptions = {
                         username: params.user.name ?? "",
                     }
                 })
+              
             } catch(error) {
                 console.log("An error occurred ", error);
             }

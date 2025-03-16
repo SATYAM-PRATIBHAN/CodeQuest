@@ -238,9 +238,7 @@ export default function ProblemPage() {
   
   // Submit Logic
   async function handleSubmit() {
-    const normalizedUserId = session?.user.id.startsWith("google|")
-  ? session.user.id.split("|")[1]  // Extract actual ID
-  : session?.user.id;
+    const normalizedUserId = session?.user.id;
   console.log("Normalized User ID:", normalizedUserId);
   
     try {
