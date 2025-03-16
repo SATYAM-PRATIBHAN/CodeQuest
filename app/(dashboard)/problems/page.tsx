@@ -35,8 +35,9 @@ export default function ProblemsPage() {
         if (!res.ok) throw new Error("Failed to fetch problems");
 
         const data: Problem[] = await res.json();
-        setProblems(data);
-        setFilteredProblems(data);
+        setProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
+        setFilteredProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
+
 
         if (session?.user?.id) {
           const solvedRes = await fetch(`/api/solved?userId=${session.user.id}`);
