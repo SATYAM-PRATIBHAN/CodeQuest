@@ -12,8 +12,10 @@ export async function POST(req: Request) {
 
     const updatedStatus = await db.userProblemStatus.upsert({
       where: {
-        userId: userId,
-        problemId : problemId
+        userId_problemId: {
+          userId: userId,
+          problemId: problemId
+      }
       },
       update: { status, solvedAt },
       create: { userId, problemId, status, solvedAt },
