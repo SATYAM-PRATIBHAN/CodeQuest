@@ -92,15 +92,25 @@ export default function ProblemPage() {
 
   useEffect(() => {
     if (!problem) return;
-
-    if (getMonacoLanguage(language.name) === "javascript") {
-      setValue(Function(`return \`${problem.starterCodeJS}\``)());
+  
+    const savedCode = localStorage.getItem(`code_${id}_${language.name}`);
+    if (savedCode) {
+      setValue(savedCode);
+    } else {
+      if (getMonacoLanguage(language.name) === "javascript") {
+        setValue(Function(`return \`${problem.starterCodeJS}\``)());
+      }
+      if (getMonacoLanguage(language.name) === "python") {
+        setValue(Function(`return \`${problem.starterCodePY}\``)());
+      }
     }
-    if (getMonacoLanguage(language.name) === "python") {
-      setValue(Function(`return \`${problem.starterCodePY}\``)());
-    }
-}, [language.name, problem]);
+  }, [language.name, problem]);
+  
 
+  useEffect(() => {
+    if (!value) return;
+    localStorage.setItem(`code_${id}_${language.name}`, value);
+  }, [value, id, language.name]);
   
   
   useEffect(() => {
