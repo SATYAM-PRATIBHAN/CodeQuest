@@ -10,14 +10,16 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const existingStatus = await db.userProblemStatus.findFirst({
+        const existingStatus = await db.userProblemStatus.findUnique({
             where: {
-                userId,
-                problemId,
+                userId_problemId: {  
+                    userId,
+                    problemId,
+                },
             },
         });
         
-
+        
         if (existingStatus) {
             // Update existing status
             const updatedStatus = await db.userProblemStatus.update({

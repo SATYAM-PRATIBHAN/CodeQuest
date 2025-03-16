@@ -45,6 +45,8 @@ model UserProblemStatus {
   solvedAt  DateTime? 
   user      User    @relation(fields: [userId], references: [id])
   problem   Problem @relation(fields: [problemId], references: [id])
+
+  @@unique([userId, problemId]) 
 }
 
 model Message {
