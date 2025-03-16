@@ -152,7 +152,7 @@ export default function ProblemPage() {
 
   
           case "python":
-            const pyFunctionNameMatch = value.match(/def (\w+)\(([^)]*)\)/);
+            const pyFunctionNameMatch = value.match(/^\s*def (\w+)\(([^)]*)\)/m);
             const pyFunctionName = pyFunctionNameMatch ? pyFunctionNameMatch[1] : null;
             const pyParams = pyFunctionNameMatch ? pyFunctionNameMatch[2].trim() : null;
 
