@@ -38,7 +38,6 @@ export default function ProblemPage() {
   const [value, setValue] = useState("");
   const [theme, setTheme] = useState(themeOptions[0].value);
   const [allTestsPassed, setAllTestsPassed] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
 
   const router = useRouter();
@@ -63,9 +62,6 @@ export default function ProblemPage() {
             problemId: id,
           }),
         });
-  
-        const data = await res.json();
-        setIsSubmitted(data.submitted);
       } catch (error) {
         console.error("Error checking submission:", error);
       }
@@ -270,7 +266,6 @@ export default function ProblemPage() {
   
       if (!res.ok) throw new Error("Failed to submit solution.");
       alert("Solution submitted successfully!");
-      setIsSubmitted(true); // Update UI immediately
     } catch (error) {
       console.error("Submit error:", error);
       alert("Failed to submit the solution.");
