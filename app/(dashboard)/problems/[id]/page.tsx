@@ -437,10 +437,9 @@ export default function ProblemPage() {
                   ? "bg-green-600 p-4 cursor-not-allowed"
                   : "bg-blue-700 p-4 hover:bg-blue-600"
               } text-white py-3 rounded-xl font-semibold transition-all duration-200`}
-              onClick={isSubmitted ? undefined : handleSubmit}
-              disabled={isSubmitted}
+              onClick={handleSubmit}
             >
-              {isSubmitted ? "Submitted Already" : "Submit Solution"}
+              Submit Solution
             </button>
           )}
         </div>
