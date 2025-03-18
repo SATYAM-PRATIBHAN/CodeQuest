@@ -62,6 +62,13 @@ export default function ProblemPage() {
             problemId: id,
           }),
         });
+  
+        if (res.ok) {
+          const data = await res.json();
+          if (data.submissionStatus === "SOLVED") {
+            setSubmissionExecution(true);
+          }
+        }
       } catch (error) {
         console.error("Error checking submission:", error);
       }
