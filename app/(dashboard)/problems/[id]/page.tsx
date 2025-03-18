@@ -10,7 +10,6 @@ const themeOptions = [
   { name: "Light", value: "light" }
 ];
 
-
 interface Problem {
   id: string;
   title: string;
@@ -134,6 +133,16 @@ export default function ProblemPage() {
     };
     fetchProblem();
   }, [id, session,language.name]); // Added `session` dependency
+
+  function handleResetCode() {
+    if(!problem) return;
+    if (getMonacoLanguage(language.name) === "javascript") {
+      setValue(Function(`return \`${problem.starterCodeJS}\``)());
+    }
+    if (getMonacoLanguage(language.name) === "python") {
+      setValue(Function(`return \`${problem.starterCodePY}\``)());
+    }
+  }
   
   async function runCode() {
     setExecuting(true);
@@ -242,10 +251,12 @@ export default function ProblemPage() {
   
   // Submit Logic
   async function handleSubmit() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const submittedCode = localStorage.setItem(`editor_submitted_code_${id}_${language.name}`, value);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const submittedTheme = localStorage.setItem(`editor_submitted_theme_${id}_${language.name}`, theme);
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const submittedCode = localStorage.setItem(`editor_submitted_code_${id}_${language.name}`, value);
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const submittedTheme = localStorage.setItem(`editor_submitted_theme_${id}_${language.name}`, theme);
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const submittedLanguage = localStorage.setItem(`editor_submitted_language_${id}_${language.name}`, language.name);
 
     setSubmissionExecution(true);
     const normalizedUserId = session?.user.id;
@@ -438,6 +449,13 @@ export default function ProblemPage() {
             disabled={executing}
           >
             {executing ? "Running..." : "Run Code"}
+          </button>
+
+          <button
+            onClick={handleResetCode}
+            className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-all duration-200"
+          >
+            Reset
           </button>
 
           {/* Submit Button (Appears only when all tests pass) */}
