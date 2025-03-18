@@ -276,9 +276,6 @@ export default function ProblemPage() {
   }
   
   
-
-
-  
   if (loading) return (
     <div className="flex justify-center bg-[#0D1117] items-center p-10 h-screen">
       <div className="text-gray-300 text-lg font-medium animate-pulse flex items-center gap-2">
