@@ -34,6 +34,7 @@ export default function ProblemPage() {
   const [output, setOutput] = useState("Run your code to see the output here...");
   const [language, setLanguage] = useState(languageOptions[0]); 
   const [executing, setExecuting] = useState(false);
+  const [submissionExecution, setSubmissionExecution] = useState(false);
   const [value, setValue] = useState("");
   const [theme, setTheme] = useState(themeOptions[0].value);
   const [allTestsPassed, setAllTestsPassed] = useState(false);
@@ -238,6 +239,7 @@ export default function ProblemPage() {
   
   // Submit Logic
   async function handleSubmit() {
+    setSubmissionExecution(true);
     const normalizedUserId = session?.user.id;
     console.log("Normalized User ID:", normalizedUserId);
   
@@ -272,6 +274,8 @@ export default function ProblemPage() {
     } catch (error) {
       console.error("Submit error:", error);
       alert("Failed to submit the solution.");
+    } finally {
+      setSubmissionExecution(false);
     }
   }
   
@@ -435,7 +439,7 @@ export default function ProblemPage() {
               className={`bg-blue-700 p-4 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold transition-all duration-200`}
               onClick={handleSubmit}
             >
-              Submit Solution
+              {submissionExecution ? "Submitting..." : "Submit Solution"}
             </button>
           )}
         </div>
