@@ -432,11 +432,7 @@ export default function ProblemPage() {
           {/* Submit Button (Appears only when all tests pass) */}
           {allTestsPassed && (
             <button
-              className={`${
-                isSubmitted
-                  ? "bg-green-600 p-4 cursor-not-allowed"
-                  : "bg-blue-700 p-4 hover:bg-blue-600"
-              } text-white py-3 rounded-xl font-semibold transition-all duration-200`}
+              className={`bg-blue-700 p-4 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold transition-all duration-200`}
               onClick={handleSubmit}
             >
               Submit Solution
