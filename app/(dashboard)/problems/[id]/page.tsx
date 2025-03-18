@@ -239,9 +239,20 @@ export default function ProblemPage() {
   // Submit Logic
   async function handleSubmit() {
     const normalizedUserId = session?.user.id;
-  console.log("Normalized User ID:", normalizedUserId);
+    console.log("Normalized User ID:", normalizedUserId);
   
     try {
+      // Delete previous submission (if exists)
+      await fetch(`/api/delete-submission`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: normalizedUserId,
+          problemId: id,
+        }),
+      });
+  
+      // Submit new solution
       const res = await fetch(`/api/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -251,9 +262,9 @@ export default function ProblemPage() {
           status: "Solved",
         }),
       });
+  
       const data = await res.json();
       console.log("Server Response:", data);
-
   
       if (!res.ok) throw new Error("Failed to submit solution.");
       alert("Solution submitted successfully!");
@@ -263,6 +274,7 @@ export default function ProblemPage() {
       alert("Failed to submit the solution.");
     }
   }
+  
   
 
 
