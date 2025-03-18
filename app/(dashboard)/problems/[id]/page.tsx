@@ -440,6 +440,7 @@ export default function ProblemPage() {
             <button
               className={`bg-blue-700 p-4 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold transition-all duration-200`}
               onClick={handleSubmit}
+              disabled={submissionExecution}
             >
               {submissionExecution ? "Submitting..." : "Submit Solution"}
             </button>
