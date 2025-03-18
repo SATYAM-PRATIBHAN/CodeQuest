@@ -242,7 +242,9 @@ export default function ProblemPage() {
   
   // Submit Logic
   async function handleSubmit() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const submittedCode = localStorage.setItem(`editor_submitted_code_${id}_${language.name}`, value);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const submittedTheme = localStorage.setItem(`editor_submitted_theme_${id}_${language.name}`, theme);
 
     setSubmissionExecution(true);
