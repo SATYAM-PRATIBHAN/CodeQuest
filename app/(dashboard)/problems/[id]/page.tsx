@@ -455,7 +455,7 @@ export default function ProblemPage() {
             onClick={handleResetCode}
             className="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-all duration-200"
           >
-            Reset
+            Reset Code
           </button>
 
           {/* Submit Button (Appears only when all tests pass) */}
