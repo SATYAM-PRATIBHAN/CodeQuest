@@ -376,13 +376,14 @@ export default function ProblemPage() {
       {/* Right Section: Code Editor and Output */}
       <div className="md:w-1/2 p-6 bg-gray-900 rounded-2xl shadow-xl flex flex-col gap-6">
         {/* {<!-- Language and Theme Selector -->} */}
-        <div className="flex justify-between items-center mb-2">
-          <div className="flex gap-2 items-center mb-2">
+        <div className="flex flex-wrap gap-4 md:justify-between items-center mb-2">
+          <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
             <label className="text-gray-300 font-medium">Language:</label>
             <select
               value={language.name}
               onChange={handleLanguageChange}
-              className="bg-gray-950 text-gray-50 px-6 py-3 cursor-pointer rounded-2xl border border-gray-800/40 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 hover:bg-gray-900 hover:border-gray-700/60"          >
+              className="bg-gray-950 text-gray-50 px-6 py-3 w-full md:w-auto cursor-pointer rounded-2xl border border-gray-800/40 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 hover:bg-gray-900 hover:border-gray-700/60"
+            >
               {languageOptions.map((lang) => (
                 <option key={lang.name} value={lang.name}>
                   {lang.name}
@@ -390,12 +391,14 @@ export default function ProblemPage() {
               ))}
             </select>
           </div>
-          <div className="flex gap-2 items-center mb-2">
+          
+          <div className="flex flex-wrap gap-2 items-center w-full md:w-auto">
             <label className="text-gray-300 font-medium">Theme:</label>
             <select
               value={theme}
               onChange={(e) => setTheme(e.target.value)}
-              className="bg-gray-950 text-gray-50 px-6 py-3 rounded-2xl cursor-pointer border border-gray-800/40 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 hover:bg-gray-900 hover:border-gray-700/60"          >
+              className="bg-gray-950 text-gray-50 px-6 py-3 w-full md:w-auto rounded-2xl cursor-pointer border border-gray-800/40 appearance-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all duration-300 hover:bg-gray-900 hover:border-gray-700/60"
+            >
               {themeOptions.map((theme) => (
                 <option key={theme.value} value={theme.value}>
                   {theme.name}
@@ -404,6 +407,7 @@ export default function ProblemPage() {
             </select>
           </div>
         </div>
+
 
 
         {/* {<!-- Code Editor -->} */}

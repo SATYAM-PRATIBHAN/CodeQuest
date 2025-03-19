@@ -16,6 +16,7 @@ import {
   IconBook,
 } from "@tabler/icons-react";
 import "../../app/globals.css"; 
+import { useSession } from "next-auth/react";
 
 const items = [
   {
@@ -46,8 +47,17 @@ const items = [
 
 
 export default function Home() {
+  const { data: session } = useSession();
   const [isAdmin, setIsAdmin] = useState(false);
   const sectionRefs = useRef<HTMLElement[]>([]);
+  const [userExist, setUserExist] = useState(false);
+
+  function handleUserExist() {
+    const user = session?.user.id;
+    if (user) {
+      setUserExist(true);
+    }
+  }
 
   useEffect(() => {
     const adminCheck = localStorage.getItem("isAdmin") === "true";
@@ -227,7 +237,7 @@ export default function Home() {
           Join thousands of developers sharpening their skills with CodeQuest.
         </p>
         <div className="mt-10">
-          <Link href="/signup">
+          <Link href={userExist ? "/problems" : "/signup"}>
             <Button 
               className="text-lg font-semibold px-9 py-4 bg-[#F9FAFB] text-[#3B82F6] rounded-2xl shadow-md transition-all duration-300 hover:bg-gradient-to-r hover:from-[#3B82F6] hover:to-[#60A5FA] hover:text-[#F0F4F8] hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]"
             >
