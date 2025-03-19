@@ -52,12 +52,11 @@ export default function Home() {
   const sectionRefs = useRef<HTMLElement[]>([]);
   const [userExist, setUserExist] = useState(false);
 
-  function handleUserExist() {
-    const user = session?.user.id;
-    if (user) {
-      setUserExist(true);
-    }
+  const user = session?.user.id;
+  if (user) {
+    setUserExist(true);
   }
+  
 
   useEffect(() => {
     const adminCheck = localStorage.getItem("isAdmin") === "true";
