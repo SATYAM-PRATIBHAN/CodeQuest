@@ -52,10 +52,13 @@ export default function Home() {
   const sectionRefs = useRef<HTMLElement[]>([]);
   const [userExist, setUserExist] = useState(false);
 
-  const user = session?.user.id;
-  if (user) {
-    setUserExist(true);
-  }
+  useEffect(()=> {
+    const user = session?.user.id;
+    if (user) {
+      setUserExist(true);
+    }
+  }, [])
+  
   
 
   useEffect(() => {
