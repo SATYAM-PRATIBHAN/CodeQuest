@@ -10,23 +10,14 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const solvedProblems = await db.userProblemStatus.findMany({
+    const solvedCount = await db.userProblemStatus.count({
       where: {
         userId: String(userId),
         status: { equals: "SOLVED", mode: "insensitive" }, // Case-insensitive match
-      },
-      select: {
-        problemId: true, // Only fetch problem IDs
-      },
+    }    
     });
-
-    const solvedProblemIds = solvedProblems.map((problem) => problem.problemId);
-
-    return NextResponse.json({ 
-      solvedCount: solvedProblems.length, 
-      solvedProblemIds 
-    }, { status: 200 });
-
+    console.log(solvedCount)
+    return NextResponse.json({ solvedCount }, { status: 200 });
   } catch (error) {
     console.error("Error fetching solved problems:", error);
     return NextResponse.json({ error: "Failed to fetch solved problems" }, { status: 500 });
