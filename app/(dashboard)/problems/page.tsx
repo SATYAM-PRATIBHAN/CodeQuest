@@ -202,9 +202,14 @@ export default function ProblemsPage() {
                   className="flex justify-between items-center p-4 bg-[#161B22] border border-[#30363D] rounded-lg shadow-md hover:shadow-xl hover:border-[#1F6FEB] cursor-pointer transition-all duration-300"
                 >
                   <div onClick={() => router.push(`/problems/${problem.id}`)}>
-                    <h2 className="text-lg font-semibold text-[#58A6FF]">
-                      {problem.title}
-                    </h2>
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-lg font-semibold text-[#58A6FF]">
+                        {problem.title}
+                      </h2>
+                      <h2 className={`text-lg font-semibold ${problem.solved ? "text-green-400" : "text-[#58A6FF]"}`}>
+                        {problem.title} {problem.solved && "✔️"}
+                      </h2>
+                    </div>
                     <p className="text-sm text-gray-400">Platform: {problem.platform}</p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {problem.tags.map((tag) => (
