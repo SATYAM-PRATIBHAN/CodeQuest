@@ -202,7 +202,7 @@ export default function ProblemsPage() {
                   className="flex justify-between items-center p-4 bg-[#161B22] border border-[#30363D] rounded-lg shadow-md hover:shadow-xl hover:border-[#1F6FEB] cursor-pointer transition-all duration-300"
                 >
                   <div onClick={() => router.push(`/problems/${problem.id}`)}>
-                    <div className="flex justify-between items-center">
+                    <div className="flex justify-between">
                       <h2 className="text-lg font-semibold text-[#58A6FF]">
                         {problem.title}
                       </h2>
