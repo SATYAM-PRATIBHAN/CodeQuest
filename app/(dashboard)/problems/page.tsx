@@ -29,6 +29,34 @@ export default function ProblemsPage() {
   const router = useRouter();
 
   useEffect(() => {
+    const fetchSolvedStatus = async () => {
+      if (!session?.user?.id) return;
+  
+      try {
+        const updatedProblems = await Promise.all(
+          problems.map(async (problem) => {
+            const res = await fetch(`/api/solved?userId=${session.user.id}&problemId=${problem.id}`);
+            if (!res.ok) return problem; // Keep it unchanged if error
+  
+            const solvedData = await res.json();
+            return {
+              ...problem,
+              solved: solvedData.length > 0, // If the array has data, mark as solved
+            };
+          })
+        );
+  
+        setProblems(updatedProblems);
+      } catch (error) {
+        console.error("Error fetching solved status:", error);
+      }
+    };
+  
+    fetchSolvedStatus();
+  }, [session?.user?.id, problems]);
+  
+
+  useEffect(() => {
     const fetchProblems = async () => {
       try {
         const res = await fetch("/api/problems");
@@ -37,7 +65,6 @@ export default function ProblemsPage() {
         const data: Problem[] = await res.json();
         setProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
         setFilteredProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
-
 
         if (session?.user?.id) {
           const solvedRes = await fetch(`/api/solved?userId=${session.user.id}`);
