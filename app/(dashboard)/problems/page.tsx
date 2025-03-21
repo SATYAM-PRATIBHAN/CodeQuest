@@ -215,7 +215,7 @@ export default function ProblemsPage() {
                           </>
                         ) : (
                           <>
-                            <svg className="w-5 h-5 text-[#58A6FF]" viewBox="0 0 24 24" fill="currentColor">
+                            <svg className="w-5 h-5 text-[red]" viewBox="0 0 24 24" fill="currentColor">
                               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z" />
                             </svg>
                             Unsolved
