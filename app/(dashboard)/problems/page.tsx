@@ -27,46 +27,35 @@ export default function ProblemsPage() {
   const [solvedCount, setSolvedCount] = useState<number>(0);
 
   const router = useRouter();
-  
 
   useEffect(() => {
     const fetchProblems = async () => {
       try {
         const res = await fetch("/api/problems");
         if (!res.ok) throw new Error("Failed to fetch problems");
-  
+
         const data: Problem[] = await res.json();
-  
         setProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
         setFilteredProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
-  
+
         if (session?.user?.id) {
           const solvedRes = await fetch(`/api/solved?userId=${session.user.id}`);
           if (!solvedRes.ok) throw new Error("Failed to fetch solved problems");
-  
+
           const solvedData = await solvedRes.json();
-  
-          // Map solved problems into the existing list
-          const updatedProblems = data.map((problem: Problem) => ({
-            ...problem,
-            solved: solvedData.some((solved: { problemId: string }) => solved.problemId === problem.id),
-          }));
-  
-          setProblems(updatedProblems);
-          setFilteredProblems(updatedProblems);
-          setSolvedCount(solvedData.length);
+          console.log(solvedData);
+          setSolvedCount(solvedData.solvedCount);
         }
       } catch (err) {
-        console.error(err);
+        console.log(err);
         setError("Failed to load problems. Please try again.");
       } finally {
         setLoading(false);
       }
     };
-  
+
     fetchProblems();
   }, [session?.user?.id]);
-  
 
   useEffect(() => {
     let filtered = problems;
