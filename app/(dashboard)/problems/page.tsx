@@ -202,23 +202,6 @@ export default function ProblemsPage() {
                       <h2 className="text-lg font-semibold text-[#58A6FF]">
                         {problem.title}
                       </h2>
-                      <h2 className={`text-lg font-semibold flex items-center gap-2 ${problem.solved ? "text-green-400" : "text-[#58A6FF]"}`}>
-                        {problem.solved ? (
-                          <>
-                            <svg className="w-5 h-5 text-green-400" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M9 16.2l-3.5-3.5-1.5 1.5L9 19l10-10-1.5-1.5L9 16.2z" />
-                            </svg>
-                            Solved
-                          </>
-                        ) : (
-                          <>
-                            <svg className="w-5 h-5 text-[red]" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z" />
-                            </svg>
-                            Unsolved
-                          </>
-                        )}
-                      </h2>
                     <p className="text-sm text-gray-400">Platform: {problem.platform}</p>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {problem.tags.map((tag) => (
