@@ -206,7 +206,7 @@ export default function ProblemsPage() {
                       <h2 className="text-lg font-semibold text-[#58A6FF]">
                         {problem.title}
                       </h2>
-                      <h2 className={`text-lg font-semibold ${problem.solved ? "text-green-400" : "text-[#58A6FF]"}`}>
+                      <h2 className={`text-lg font-semibold ${problem.solved ? "text-green-400" : "text-[red]"}`}>
                         {problem.solved ? "solved" : "unsolved"}
                       </h2>
                     </div>
