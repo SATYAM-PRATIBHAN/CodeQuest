@@ -33,20 +33,26 @@ export default function ProblemsPage() {
       try {
         const res = await fetch("/api/problems");
         if (!res.ok) throw new Error("Failed to fetch problems");
-
+  
         const data: Problem[] = await res.json();
-        setProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
-        setFilteredProblems(data.sort((a, b) => a.title.localeCompare(b.title)));
-
-
+        let updatedProblems = data.sort((a, b) => a.title.localeCompare(b.title));
+  
         if (session?.user?.id) {
           const solvedRes = await fetch(`/api/solved?userId=${session.user.id}`);
           if (!solvedRes.ok) throw new Error("Failed to fetch solved problems");
-
+  
           const solvedData = await solvedRes.json();
-          console.log(solvedData);
           setSolvedCount(solvedData.solvedCount);
+  
+          // Mark solved problems
+          updatedProblems = updatedProblems.map((problem) => ({
+            ...problem,
+            solved: solvedData.solvedProblemIds.includes(problem.id),
+          }));
         }
+  
+        setProblems(updatedProblems);
+        setFilteredProblems(updatedProblems);
       } catch (err) {
         console.log(err);
         setError("Failed to load problems. Please try again.");
@@ -54,9 +60,11 @@ export default function ProblemsPage() {
         setLoading(false);
       }
     };
-
+  
     fetchProblems();
   }, [session?.user?.id]);
+  
+  
 
   useEffect(() => {
     let filtered = problems;
@@ -198,36 +206,22 @@ export default function ProblemsPage() {
               filteredProblems.map((problem) => (
                 <div
                   key={problem.id}
-                  onClick={() => handleSolvedToggle()} // Corrected to use problem.id
-                  className="flex justify-between items-center p-4 bg-[#161B22] border border-[#30363D] rounded-lg shadow-md hover:shadow-xl hover:border-[#1F6FEB] cursor-pointer transition-all duration-300"
+                  className={`flex justify-between items-center p-4 border rounded-lg shadow-md cursor-pointer transition-all duration-300 ${
+                    problem.solved ? "bg-green-900 border-green-400" : "bg-[#161B22] border-[#30363D] hover:border-[#1F6FEB]"
+                  }`}
                 >
                   <div onClick={() => router.push(`/problems/${problem.id}`)}>
-                    <h2 className="text-lg font-semibold text-[#58A6FF]">
-                      {problem.title}
+                    <h2 className={`text-lg font-semibold ${problem.solved ? "text-green-400" : "text-[#58A6FF]"}`}>
+                      {problem.title} {problem.solved && "✔️"}
                     </h2>
                     <p className="text-sm text-gray-400">Platform: {problem.platform}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {problem.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          onClick={() => handleTagClick(tag)}
-                          className={`px-2 py-1 text-xs rounded-lg cursor-pointer ${
-                            selectedTags.includes(tag)
-                              ? "bg-[#1F6FEB] text-white"
-                              : "bg-[#30363D] text-gray-300 hover:bg-[#1F6FEB] hover:text-white transition"
-                          }`}
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
                   </div>
 
                   <div className="text-right">
                     <p className={`font-semibold ${getDifficultyColor(problem.difficulty)}`}>{problem.difficulty}</p>
                   </div>
-
                 </div>
+
               ))
             ) : (
               <p className="text-center text-gray-400">No problems found.</p>
