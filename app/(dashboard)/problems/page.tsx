@@ -94,8 +94,6 @@ export default function ProblemsPage() {
     }
   };
   
-  
-
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "Easy":
